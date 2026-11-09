@@ -12,7 +12,7 @@ function imagemProdutoUrl(int $produtoId): string
             return $baseUrl . $produtoId . '.' . $ext;
         }
     }
-    return "https://via.placeholder.com/140x100?text=Sem+imagem";
+    return "img/auto.png";
 }
 ?>
 <!doctype html>
@@ -56,21 +56,24 @@ function imagemProdutoUrl(int $produtoId): string
 <input class="input" type="text" name="modelo" required value="<?= !empty($editar) ? htmlspecialchars($editar['modelo'] ?? '') : '' ?>">
 </div>
 <div class="form-group">
+<label>Preço (R$) *</label>
+<input class="input" type="text" name="preco" inputmode="decimal" required placeholder="Ex: 150,00 ou 1.500,00" value="<?= !empty($editar) ? htmlspecialchars((string)($editar['preco'] ?? '')) : '' ?>">
+<small class="muted">Informe o preço de venda do produto.</small>
+</div>
+<div class="form-group">
 <label>Ano</label>
 <input class="input" type="number" name="ano" min="1900" max="2100" value="<?= !empty($editar) ? (int)$editar['ano'] : '' ?>">
 </div>
 <div class="form-group">
-<label>Cor</label>
-<input class="input" type="text" name="cor" value="<?= !empty($editar) ? htmlspecialchars($editar['cor'] ?? '') : '' ?>">
+
+
 </div>
 <div class="form-group">
-<label>KM</label>
-<input class="input" type="number" name="km" min="0" value="<?= !empty($editar) ? (int)$editar['km'] : '' ?>">
+
 </div>
 <div class="form-group">
-<label>Preço</label>
-<input class="input" type="text" inputmode="decimal" pattern="[0-9.,]*" name="preco" placeholder="Ex: 16.000,00 ou 16000.00" required value="<?= !empty($editar) ? htmlspecialchars($editar['preco'] ?? '') : '' ?>">
-<small class="muted">Use ponto ou vírgula. Ex: 16.000,00 ou 16000.00</small>
+
+
 </div>
 <div class="form-group">
 <label>Preço atual (opcional)</label>
@@ -82,13 +85,13 @@ function imagemProdutoUrl(int $produtoId): string
 <textarea class="input" name="descricao" rows="3"><?= !empty($editar) ? htmlspecialchars($editar['descricao'] ?? '') : '' ?></textarea>
 </div>
 <div class="form-group">
-<label>Imagem da Peças (opcional)</label>
+<label>Imagem do produto (opcional)</label>
 <input class="input" type="file" name="imagem" accept="image/png, image/jpeg, image/webp">
-<small class="muted">JPG, PNG ou WEBP até 2MB. Imagem salva pelo ID da Peças.</small>
+<small class="muted">JPG, PNG ou WEBP até 2MB. Imagem salva pelo ID do produto.</small>
 </div>
 <div class="actions">
 <button class="btn btn-primary" type="submit">Salvar</button>
-<a class="btn" href="index.php?controller=produto&action=index">Novo carro</a>
+
 </div>
 </form>
 </div>

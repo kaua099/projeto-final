@@ -1,0 +1,25 @@
+INTEGRACAO DE PEDIDOS + WHATSAPP CLOUD API
+
+1) Faça backup do banco e dos arquivos atuais.
+2) Envie os arquivos alterados mantendo as pastas: carrinho.php, controllers/WhatsAppController.php, views/whatsapp_config.php e services/WhatsAppCloudApi.php.
+3) No phpMyAdmin, selecione o banco da loja e importe sql_whatsapp_pedidos.sql.
+4) Entre como administrador e abra index.php?controller=whatsapp&action=config.
+5) Preencha o número de destino em formato internacional (55 + DDD + número), Phone Number ID, Access Token, versão da Graph API, nome do template aprovado e idioma. Marque Ativar e salve.
+6) Na Meta, crie/aprove um template de categoria utilidade (UTILITY), idioma pt_BR, com 6 variáveis no corpo, nesta ordem:
+   {{1}} número do pedido
+   {{2}} nome do cliente
+   {{3}} telefone do cliente
+   {{4}} forma de pagamento
+   {{5}} resumo dos produtos
+   {{6}} total
+   Exemplo de texto do corpo: Novo pedido #{{1}}. Cliente: {{2}}. Telefone: {{3}}. Pagamento: {{4}}. Produtos: {{5}}. Total: {{6}}.
+   O nome configurado no site deve ser exatamente o nome aprovado na Meta.
+7) Faça um pedido de teste. O pedido fica gravado em pedidos e os itens em pedido_itens. O resultado do envio fica em whatsapp_status e whatsapp_erro.
+
+OBSERVACOES IMPORTANTES
+- Este checkout registra o pedido, não captura pagamento online.
+- A notificação é enviada pela Cloud API usando um template aprovado; o envio não depende de abrir WhatsApp no navegador do cliente.
+- O token é salvo no banco e não aparece novamente na tela. Restrinja o acesso ao painel e use token de sistema permanente.
+- Se o provedor de hospedagem bloquear conexões HTTPS de saída ou não tiver cURL habilitado, o pedido ainda será salvo, mas o aviso falhará.
+- A integração não foi testada contra sua conta Meta real porque as credenciais não foram fornecidas e não devem ser compartilhadas aqui.
+- O arquivo config/db.php que veio no ZIP contém credenciais do banco em texto puro. Como o ZIP foi compartilhado, altere a senha do usuário MySQL no painel da hospedagem e atualize config/db.php no servidor. Não envie tokens ou senhas em conversas.

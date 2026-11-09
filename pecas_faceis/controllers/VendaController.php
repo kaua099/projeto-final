@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/Venda.php';
-require_once __DIR__ . '/../models/Produto.php';
+require_once __DIR__ . '/../models/produto.php';
 
 class VendaController
 {
@@ -12,7 +12,7 @@ class VendaController
         $vendas = $vendaModel->listarTodas();
 
         $produtoModel = new Produto();
-        $peças = $produtoModel->listarTodos(true);
+        $Peças = $produtoModel->listarTodos(true);
 
         require_once __DIR__ . '/../views/vendas.php';
     }
@@ -21,13 +21,13 @@ class VendaController
     {
         $this->check();
 
-        $peçasId = (int)($_POST['Peças id'] ?? 0);
+        $carroId = (int)($_POST['Peças_id'] ?? 0);
         $clienteNome = trim($_POST['cliente_nome'] ?? '');
         $clienteEmail = trim($_POST['cliente_email'] ?? '');
         $clienteTelefone = trim($_POST['cliente_telefone'] ?? '');
         $valor = $this->parseDecimal((string)($_POST['valor'] ?? '0'));
 
-        if ($peçasId <= 0 || $clienteNome === '' || $valor <= 0) {
+        if ($carroId <= 0 || $clienteNome === '' || $valor <= 0) {
             die("Dados inválidos.");
         }
 

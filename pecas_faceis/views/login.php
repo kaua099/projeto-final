@@ -93,7 +93,7 @@ $showCadastro = isset($_GET['cadastro']);
                 </div>
             </form>
             <div class="toggle-link">
-                Não tem conta? <a onclick="showModal('cadastro')">Cadastre-se</a>
+             
             </div>
         </div>
 

@@ -66,12 +66,19 @@ class AuthController
             die("Senha inválida.");
         }
 
+        // Usa o perfil real salvo no banco (coluna `tipo`), em vez de forçar 'cliente'
+        $perfil = (($user['perfil'] ?? $user['tipo'] ?? 'cliente') === 'admin') ? 'admin' : 'cliente';
+
         $_SESSION['usuario_id'] = $user['id'];
         $_SESSION['usuario_email'] = $user['email'];
-        $_SESSION['perfil'] = 'cliente';
+        $_SESSION['perfil'] = $perfil;
         $_SESSION['nome'] = $user['nome'];
 
-        header("Location: lojaview.php");
+        if ($perfil === 'admin') {
+            header("Location: index.php?controller=auth&action=dashboard");
+        } else {
+            header("Location: lojaview.php");
+        }
         exit;
     }
 

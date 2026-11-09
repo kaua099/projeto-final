@@ -8,7 +8,7 @@ $podeConfirmar = !in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="icon" type="image/png" href="img/auto.png">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Vendas - Auto Peças Fáceis</title>
     <link rel="stylesheet" href="public/assets/css/style.css">

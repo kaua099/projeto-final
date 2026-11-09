@@ -1,108 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Configurações do WhatsApp - Peças Fáceis</title>
-    <link rel="icon" type="image/png" href="img/logo.png">
-    <link rel="stylesheet" href="public/assets/css/style.css">
-    <style>
-        .whatsapp-card { max-width:580px; margin:40px auto; }
-        .whatsapp-card .form-group { margin-bottom:20px; }
-        .whatsapp-card label { display:block; margin-bottom:8px; font-weight:600; }
-        .whatsapp-card .input-group { display:flex; gap:10px; align-items:center; }
-        .whatsapp-card .input-group input { flex:1; }
-        .whatsapp-card .help-text { font-size:0.85rem; color:var(--muted); margin-top:6px; }
-        .whatsapp-card .btn-save { background:#25D366; color:#111; border:none; padding:12px 32px; border-radius:14px; font-weight:700; font-size:1rem; cursor:pointer; }
-        .whatsapp-card .btn-save:hover { background:#20bd5a; }
-        .alert-success { background:rgba(37,211,102,0.15); border:1px solid rgba(37,211,102,0.3); color:#25D366; padding:14px 18px; border-radius:14px; margin-bottom:20px; font-weight:600; display:<?= $saved ? 'block' : 'none' ?>; }
-        .current-number { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:16px; margin-bottom:20px; }
-        .current-number strong { display:block; font-size:1.2rem; color:#25D366; margin-top:4px; }
-        .current-number .empty-msg { color:var(--muted); font-style:italic; }
-    </style>
-</head>
-<body class="surface-dark">
-    <div class="header">
-        <div class="container header-inner">
-            <div>
-                <strong>Peças Fáceis</strong>
-                <span class="badge">WhatsApp</span>
-            </div>
-            <div class="user">
-                Olá, <strong><?= htmlspecialchars($_SESSION['nome'] ?? 'Admin') ?></strong>
-                <a class="btn btn-ghost" href="lojaview.php" style="margin-left:8px">Ir para Loja</a>
-                <a class="btn btn-ghost" href="index.php?controller=auth&action=logout">Sair</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="card whatsapp-card">
-            <h1 style="display:flex; align-items:center; gap:10px;">
-                <span style="font-size:1.5rem;">📱</span>
-                Configurações do WhatsApp
-            </h1>
-            <p style="color:var(--muted); margin-bottom:24px;">
-                Configure o número de WhatsApp que será usado para receber os contatos dos clientes.
-            </p>
-
-            <div class="alert-success" id="successAlert">
-                Configuração salva com sucesso!
-            </div>
-
-            <div class="current-number">
-                Número atual:
-                <strong>
-                    <?= $numero ? '+55 ' . substr($numero, 0, 2) . ' ' . substr($numero, 2) : '<span class="empty-msg">Nenhum número configurado</span>' ?>
-                </strong>
-            </div>
-
-            <form method="post" action="index.php?controller=whatsapp&action=config" onsubmit="return validateForm()">
-                <div class="form-group">
-                    <label for="numero">Número do WhatsApp</label>
-                    <div class="input-group">
-                        <span style="color:var(--muted); font-weight:600;">+55</span>
-                        <input
-                            type="text"
-                            id="numero"
-                            name="numero"
-                            class="input"
-                            placeholder="11999999999"
-                            value="<?= htmlspecialchars($numero) ?>"
-                            maxlength="20"
-                            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-                        >
-                    </div>
-                    <div class="help-text">
-                        Digite apenas números — inclua DDD e o número com 8 ou 9 dígitos (ex: 11999999999).
-                    </div>
-                </div>
-
-                <div style="display:flex; gap:12px; align-items:center;">
-                    <button type="submit" class="btn-save">Salvar</button>
-                    <a class="btn btn-ghost" href="index.php?controller=auth&action=dashboard">Voltar</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-    function validateForm() {
-        const input = document.getElementById('numero');
-        const num = input.value.replace(/[^0-9]/g, '');
-        if (num.length > 0 && num.length < 10) {
-            alert('O número deve ter pelo menos 10 dígitos (DDD + número).');
-            return false;
-        }
-        return true;
-    }
-
-    <?php if ($saved): ?>
-    setTimeout(() => {
-        const alert = document.getElementById('successAlert');
-        if (alert) alert.style.display = 'none';
-    }, 4000);
-    <?php endif; ?>
-    </script>
-</body>
-</html>
+<html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Configurações do WhatsApp - Peças Fáceis</title><link rel="icon" type="image/png" href="img/auto.png"><link rel="stylesheet" href="public/assets/css/style.css">
+<style>.whatsapp-card{max-width:760px;margin:40px auto}.whatsapp-card .form-group{margin-bottom:18px}.whatsapp-card label{display:block;margin-bottom:7px;font-weight:600}.whatsapp-card input{width:100%}.whatsapp-card .help-text{font-size:.85rem;color:var(--muted);margin-top:6px;line-height:1.5}.whatsapp-card .btn-save{background:#25D366;color:#111;border:0;padding:12px 28px;border-radius:12px;font-weight:700;cursor:pointer}.alert-success,.alert-error,.info{padding:14px 18px;border-radius:12px;margin:15px 0;line-height:1.5}.alert-success{background:rgba(37,211,102,.15);color:#25D366}.alert-error{background:rgba(220,40,40,.15);color:#ff8b8b}.info{background:rgba(70,130,220,.12);border:1px solid rgba(70,130,220,.3)}.section-title{margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid #444}.status{color:#25D366;font-weight:bold}</style></head>
+<body class="surface-dark"><div class="header"><div class="container header-inner"><div><strong>Peças Fáceis</strong> <span class="badge">WhatsApp</span></div><div class="user">Olá, <strong><?= htmlspecialchars($_SESSION['nome'] ?? 'Admin') ?></strong> <a class="btn btn-ghost" href="lojaview.php" style="margin-left:8px">Ir para Loja</a> <a class="btn btn-ghost" href="index.php?controller=auth&action=logout">Sair</a></div></div></div>
+<div class="container"><div class="card whatsapp-card"><h1>📱 Configurações do WhatsApp</h1><p style="color:var(--muted)">Configure o número que receberá os avisos de novos pedidos e os dados da WhatsApp Cloud API da Meta.</p>
+<?php if ($saved): ?><div class="alert-success">Configuração salva com sucesso!</div><?php endif; ?><?php if ($erro): ?><div class="alert-error"><?= htmlspecialchars($erro) ?></div><?php endif; ?>
+<form method="post" action="index.php?controller=whatsapp&action=config">
+<h3 class="section-title">Número que receberá os pedidos</h3><div class="form-group"><label for="numero">WhatsApp do administrador (com código do país)</label><input class="input" type="text" id="numero" name="numero" placeholder="5521999999999" value="<?= htmlspecialchars($numero) ?>" required><div class="help-text">Use formato internacional, somente números. Exemplo: 5521999999999.</div></div>
+<h3 class="section-title">WhatsApp Cloud API — Meta</h3><div class="info">O pedido será salvo no banco mesmo se o WhatsApp estiver indisponível. Para o aviso automático, a Meta exige um modelo (template) aprovado. Configure abaixo o nome exato desse modelo, com 6 variáveis no corpo.</div>
+<div class="form-group"><label for="cloud_phone_number_id">Phone Number ID</label><input class="input" id="cloud_phone_number_id" name="cloud_phone_number_id" value="<?= htmlspecialchars($config['cloud_phone_number_id'] ?? '') ?>" placeholder="ID do número fornecido pela Meta"></div>
+<div class="form-group"><label for="cloud_access_token">Access Token</label><input class="input" type="password" id="cloud_access_token" name="cloud_access_token" autocomplete="new-password" placeholder="<?= !empty($config['token_configurado']) ? 'Token já salvo — deixe em branco para manter' : 'Cole aqui o token de acesso' ?>"><div class="help-text"><?= !empty($config['token_configurado']) ? '<span class="status">Token já configurado.</span> Por segurança, ele não é exibido.' : 'O token será armazenado no banco. Use um token permanente de sistema, com as permissões necessárias.' ?></div></div>
+<div class="form-group"><label for="cloud_api_version">Versão da Graph API</label><input class="input" id="cloud_api_version" name="cloud_api_version" value="<?= htmlspecialchars($config['cloud_api_version'] ?? 'v23.0') ?>" placeholder="v23.0"></div>
+<div class="form-group"><label for="cloud_template_name">Nome do modelo aprovado na Meta</label><input class="input" id="cloud_template_name" name="cloud_template_name" value="<?= htmlspecialchars($config['cloud_template_name'] ?? '') ?>" placeholder="novo_pedido_admin"><div class="help-text">O template deve ser aprovado e conter 6 variáveis no corpo, nesta ordem: número do pedido, nome do cliente, telefone, forma de pagamento, resumo dos produtos e total.</div></div>
+<div class="form-group"><label for="cloud_template_language">Idioma do modelo</label><input class="input" id="cloud_template_language" name="cloud_template_language" value="<?= htmlspecialchars($config['cloud_template_language'] ?? 'pt_BR') ?>" placeholder="pt_BR"></div>
+<div class="form-group"><label style="display:flex;align-items:center;gap:10px"><input type="checkbox" name="cloud_ativo" value="1" style="width:auto" <?= !empty($config['cloud_ativo']) ? 'checked' : '' ?>> Ativar envio automático de aviso de novos pedidos</label></div>
+<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button type="submit" class="btn-save">Salvar configurações</button><a class="btn btn-ghost" href="index.php?controller=auth&action=dashboard">Voltar</a></div>
+</form></div></div></body></html>

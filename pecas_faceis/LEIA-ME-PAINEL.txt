@@ -1,0 +1,25 @@
+PAINEL ADMINISTRATIVO PEÇAS FÁCEIS — ATUALIZAÇÃO VISUAL
+
+O arquivo views/dashboard.php foi redesenhado para seguir a referência enviada:
+- tema preto e vermelho;
+- menu lateral;
+- indicadores calculados a partir do banco;
+- gráfico dos últimos 7 dias;
+- pedidos recentes e status de envio do WhatsApp;
+- layout responsivo para celular.
+
+INSTALAÇÃO
+1. Faça backup dos arquivos atuais.
+2. Extraia o ZIP mantendo a estrutura de pastas.
+3. Envie/substitua a pasta pecas_faceis no servidor, ou apenas substitua:
+   pecas_faceis/views/dashboard.php
+4. Entre novamente no painel administrativo.
+
+DADOS
+- Indicadores de pedidos e vendas usam a tabela `pedidos` criada por sql_whatsapp_pedidos.sql.
+- Se essa tabela ainda não existir, o painel tenta usar a tabela legada `vendas`.
+- Clientes: usuários com tipo = 'cliente'.
+- Produtos: registros ativos na tabela `carros`.
+
+OBSERVAÇÃO DE SEGURANÇA
+O arquivo config/db.php original contém credenciais MySQL em texto puro. Como esse arquivo foi compartilhado no ZIP, altere a senha do usuário do banco no painel da hospedagem e atualize config/db.php no servidor. Não compartilhe senhas ou tokens.

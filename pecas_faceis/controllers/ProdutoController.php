@@ -44,7 +44,7 @@ class ProdutoController
 
         $produtoModel = new Produto();
         if ($id > 0) {
-            $produtoModel->atualizar($id, $nome, $marca, $modelo, $ano, $cor, $preco, $precoAtual, $descricao);
+            $produtoModel->atualizar($id, $nome, $marca, $modelo, $ano, $cor, $km, $preco, $precoAtual, $descricao);
             $this->salvarImagemDoProduto($id);
         } else {
             $adminId = (int)($_SESSION['usuario_id'] ?? 0);
@@ -58,7 +58,7 @@ class ProdutoController
             if ($adminId <= 0) {
                 die("Admin inválido.");
             }
-            $novoId = $produtoModel->inserir($nome, $marca, $modelo, $ano, $cor, $preco, $precoAtual, $descricao, $adminId);
+            $novoId = $produtoModel->inserir($nome, $marca, $modelo, $ano, $cor, $km, $preco, $precoAtual, $descricao, $adminId);
             $this->salvarImagemDoProduto($novoId);
         }
 
@@ -121,11 +121,14 @@ class ProdutoController
 
     private function salvarImagemDoProduto(int $produtoId): void
     {
-        if (!isset($_FILES['imagem']) || $_FILES['imagem']['error'] !== UPLOAD_ERR_OK) {
-            return;
+        if (!isset($_FILES['imagem']) || ($_FILES['imagem']['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+            return; // imagem opcional
+        }
+        if ($_FILES['imagem']['error'] !== UPLOAD_ERR_OK) {
+            throw new RuntimeException('Não foi possível enviar a imagem. Verifique o tamanho do arquivo e as configurações do PHP.');
         }
         if (($_FILES['imagem']['size'] ?? 0) > 2 * 1024 * 1024) {
-            return;
+            throw new RuntimeException('A imagem deve ter no máximo 2 MB.');
         }
         $tmp = $_FILES['imagem']['tmp_name'];
         $mime = mime_content_type($tmp);
@@ -135,18 +138,22 @@ class ProdutoController
             'image/webp' => 'webp',
             default => null
         };
-        if ($ext === null) return;
+        if ($ext === null) {
+            throw new RuntimeException('Formato de imagem inválido. Use JPG, PNG ou WEBP.');
+        }
 
         $destDir = __DIR__ . '/../public/uploads/carros/';
-        if (!is_dir($destDir)) {
-            mkdir($destDir, 0777, true);
+        if (!is_dir($destDir) && !mkdir($destDir, 0775, true) && !is_dir($destDir)) {
+            throw new RuntimeException('Não foi possível criar a pasta de imagens.');
         }
         foreach (['jpg','png','webp'] as $e) {
             $old = $destDir . $produtoId . '.' . $e;
             if (file_exists($old)) unlink($old);
         }
         $dest = $destDir . $produtoId . '.' . $ext;
-        move_uploaded_file($tmp, $dest);
+        if (!move_uploaded_file($tmp, $dest)) {
+            throw new RuntimeException('Não foi possível salvar a imagem na pasta public/uploads/carros.');
+        }
     }
 
     private function deletarImagemDoProduto(int $produtoId): void

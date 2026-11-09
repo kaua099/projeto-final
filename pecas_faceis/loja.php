@@ -5,7 +5,7 @@ $usuario = $_SESSION['nome'] ?? null;
 
 function imagemCarroUrl(int $carroId): string
 {
-    $baseFs = __DIR__ . '/../public/uploads/carros/';
+    $baseFs = __DIR__ . '/public/uploads/carros/';
     $baseUrl = 'public/uploads/carros/';
     foreach (['jpg', 'png', 'webp'] as $ext) {
         if (file_exists($baseFs . $carroId . '.' . $ext)) {
@@ -274,7 +274,7 @@ try {
     <header class="header-bar">
         <div class="header-inner">
             <a href="lojaview.php" class="logo-link">
-                <img src="img/logo.png" alt="Garagem Brasil">
+                <img src="img/auto.png" alt="Auto Peças">
             </a>
             <div class="header-actions">
                 <?php if ($perfil === 'admin'): ?>
